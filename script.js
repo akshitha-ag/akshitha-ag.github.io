@@ -1,5 +1,5 @@
 // ===== TYPEWRITER =====
-const roles=['Data Analyst','BI Analyst','Dashboard Architect'];
+const roles=['Data Analyst','Business Intelligence Analyst'];
 let ri=0,ci=0,del=false,pause=false;
 const el=document.getElementById('typed');
 const TS=110,DS=65,PT=2200,PD=500;
