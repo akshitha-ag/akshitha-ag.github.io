@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0a0b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Urbanist', sans-serif;
+  }
+
+  .hero-center {
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 2rem;
+  }
+
+  .greeting {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .greeting strong {
+    color: #f1f5f9;
+    font-weight: 800;
+  }
+
+  .typewriter-block {
+    margin-bottom: 2rem;
+  }
+
+  .typewriter-line {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: #ff6b35;
+    min-height: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.8em;
+    background: #ff6b35;
+    margin-left: 5px;
+    border-radius: 2px;
+    vertical-align: middle;
+    animation: blink 0.9s step-end infinite;
+    flex-shrink: 0;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .tagline {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: #64748b;
+    font-weight: 400;
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .btn {
+    padding: .75rem 1.6rem;
+    font-family: 'Inter', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all .2s;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .btn-primary {
+    background: #ff6b35;
+    color: #0a0a0b;
+    border: none;
+  }
+  .btn-primary:hover { background: #ff8555; transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1.5px solid #334155;
+    color: #e2e8f0;
+    background: transparent;
+  }
+  .btn-ghost:hover { border-color: #ff6b35; color: #ff6b35; }
+
+  .socials {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .socials a {
+    font-family: 'DM Mono', monospace;
+    font-size: .9rem;
+    font-weight: 500;
+    color: #94a3b8;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: all .2s;
+  }
+  .socials a:hover { color: #ff6b35; border-bottom-color: #ff6b35; }
+</style>
+</head>
+<body>
+<div class="hero-center">
+  <p class="greeting">Hi, I'm <strong>Akshitha Addagatla</strong></p>
+
+  <div class="typewriter-block">
+    <div class="typewriter-line">
+      <span id="typed"></span><span class="cursor"></span>
+    </div>
+  </div>
+
+  <p class="tagline">Turning complex datasets into quantified business growth and executive clarity.</p>
+
+  <div class="hero-cta">
+    <a href="#" class="btn btn-primary">View Projects →</a>
+    <a href="#" class="btn btn-ghost">Download Résumé</a>
+  </div>
+
+  <div class="socials">
+    <a href="#">LinkedIn ↗</a>
+    <a href="#">GitHub ↗</a>
+    <a href="#">Email ↗</a>
+  </div>
+</div>
+
+<script>
+const roles = [
+  'Data Analyst',
+  'BI Analyst',
+  'Dashboard Architect'
+];
+
+let roleIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let isPausing = false;
+
+const el = document.getElementById('typed');
+
+const TYPE_SPEED = 110;
+const DELETE_SPEED = 65;
+const PAUSE_AFTER_TYPE = 2200;
+const PAUSE_AFTER_DELETE = 500;
+
+function type() {
+  const current = roles[roleIndex];
+  if (isPausing) return;
+
+  if (!isDeleting) {
+    el.textContent = current.slice(0, charIndex + 1);
+    charIndex++;
+    if (charIndex === current.length) {
+      isPausing = true;
+      setTimeout(() => {
+        isPausing = false;
+        isDeleting = true;
+        type();
+      }, PAUSE_AFTER_TYPE);
+      return;
+    }
+    setTimeout(type, TYPE_SPEED);
+  } else {
+    el.textContent = current.slice(0, charIndex - 1);
+    charIndex--;
+    if (charIndex === 0) {
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      isPausing = true;
+      setTimeout(() => {
+        isPausing = false;
+        type();
+      }, PAUSE_AFTER_DELETE);
+      return;
+    }
+    setTimeout(type, DELETE_SPEED);
+  }
+}
+
+type();
+</script>
+</body>
+</html>
